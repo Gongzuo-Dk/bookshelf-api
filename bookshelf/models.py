@@ -30,7 +30,7 @@ class Book(models.Model):
     total_pages = models.IntegerField(null=True, blank=True)
     start_date = models.DateField(null=True, blank=True)
     finish_date = models.DateField(null=True, blank=True)
-    created_date = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
