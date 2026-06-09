@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Book
+from .models import Book, ReadingGoal
 
 class BookSerializer(serializers.ModelSerializer):
 
@@ -45,3 +45,42 @@ class BookSerializer(serializers.ModelSerializer):
                 {"rating": "You can only rate a book you have completed."}
             )
         return data
+    
+
+class ReadingGoalSerializer(serializers.ModelSerializer):
+    books_completed_this_year = serializers.SerializerMethodField()
+    progress_percentage = serializers.SerializerMethodField()
+
+    class Meta:
+        model = ReadingGoal
+        fields = [
+            "id",
+            "year",
+            "target_books",
+            "books_completed_this_year",
+            "progress_percentage",
+        ]
+        read_only_fields = ["id"]
+
+    def get_books_completed_this_year(self, obj):
+        return Book.objects.filter(
+            user=obj.user,
+            status="completed",
+            finish_date__year=obj.year
+        ).count()
+    
+    def get_progress_percentage(self, obj):
+        completed = self.get_books_completed_this_year(obj)
+        if obj.target_books > 0:
+            return round((completed / obj.target_books) * 100, 1)
+        return 0
+    
+class StatsSerializer(serializers.Serializer):
+    total_books = serializers.IntegerField()
+    completed_this_year = serializers.IntegerField()
+    currently_reading = serializers.IntegerField()
+    want_to_read = serializers.IntegerField()
+    abandoned = serializers.IntegerField()
+    average_rating = serializers.FloatField(allow_null=True)
+    favourite_genre = serializers.CharField(allow_null=True)
+    goal_progress = serializers.FloatField(allow_null=True)

@@ -35,3 +35,20 @@ class Book(models.Model):
 
     def __str__(self):
         return f"{self.title} by {self.author}"
+
+
+class ReadingGoal(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="reading_goals"
+    )
+    year = models.IntegerField()
+    target_books = models.IntegerField()
+
+    class MEta:
+        unique_together = ("user", "year")
+
+    def __str__(self):
+        return f"{self.user.username} - {self.year} goal: {self.target_books} books"
+    
