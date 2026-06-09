@@ -46,7 +46,7 @@ class ReadingGoal(models.Model):
     year = models.IntegerField()
     target_books = models.IntegerField()
 
-    class MEta:
+    class Meta:
         unique_together = ("user", "year")
 
     def __str__(self):
