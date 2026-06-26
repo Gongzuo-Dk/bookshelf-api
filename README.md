@@ -7,7 +7,7 @@ A personal reading tracker REST API built with Django REST Framework and Postgre
 ![DRF](https://img.shields.io/badge/Django_REST_Framework-API-red)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-blue)
 
-**Live API:** https://bookshelf-api-production-d927.up.railway.app/api/
+**Live API:** https://bookshelf-api-production-d927.up.railway.app
 
 ---
 
